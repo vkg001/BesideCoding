@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '../Constants';
 
 const RequireAuth = ({ children }) => {
   const navigate = useNavigate();

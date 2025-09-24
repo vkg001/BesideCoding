@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavi
 import Lottie from "lottie-react";
 import dashboardAnimation from "../assets/dashboard-animation.json";
 import transitionAnimation from "../assets/transition-animation.json";
+import { API_BASE_URL } from '../Constants';
 
 function LandingPage() {
   const exploreRef = useRef(null);

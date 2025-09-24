@@ -8,6 +8,7 @@ import '@lottiefiles/lottie-player';
 import successLoginAnimation from '../assets/Pin code Password Protection, Secure Login animation.json';
 import withReactContent from 'sweetalert2-react-content';
 import Lottie from 'lottie-react'; // You're using <Lottie />, so this is needed
+import { API_BASE_URL } from '../Constants';
 
 const MySwal = withReactContent(Swal);
 
