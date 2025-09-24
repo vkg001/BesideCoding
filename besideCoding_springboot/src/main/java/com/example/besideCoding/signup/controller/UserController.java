@@ -21,7 +21,6 @@ public class UserController {
     private final UserService userService;
     private final RestClient restClient;
 
-    // Constructor-based injection is a best practice
     public UserController(UserService userService, RestClient restClient) {
         this.userService = userService;
         this.restClient = restClient;
@@ -65,7 +64,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/google")
-    public ResponseEntity<?> googleSignIn(@RequestBody Map<String, String> payload, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> googleSignIn(@RequestBody Map<String, String> payload, HttpSession session) {
         String accessToken = payload.get("access_token");
 
         if (accessToken == null || accessToken.isEmpty()) {
@@ -73,13 +72,12 @@ public class UserController {
         }
 
         try {
-            // ✅ Use RestClient to call Google's userinfo endpoint
             Map<String, Object> userInfo = restClient
                     .get()
                     .uri("https://www.googleapis.com/oauth2/v3/userinfo")
                     .headers(headers -> headers.setBearerAuth(accessToken))
                     .retrieve()
-                    .body(Map.class); // Simpler API, no .block() needed
+                    .body(Map.class);
 
             if (userInfo == null) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Failed to retrieve user info from Google."));
@@ -100,7 +98,6 @@ public class UserController {
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "An internal error occurred during Google sign-in."));
         }
     }
@@ -138,7 +135,6 @@ public class UserController {
             }
             return ResponseEntity.ok("Profile updated successfully");
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update profile: " + e.getMessage());
         }
     }
