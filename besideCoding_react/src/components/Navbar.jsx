@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ProfileDropdown from './ProfileDropdown';
+import { API_BASE_URL } from '../Constants';
 
 const Navbar = () => {
   const [interviewOpen, setInterviewOpen] = useState(false);
@@ -31,7 +32,7 @@ const Navbar = () => {
   const useSessionUserId = () => {
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-      axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
+      axios.get(API_BASE_URL + "/api/session-user", { withCredentials: true })
         .then((res) => setUserId(res.data.userId))
         .catch(() => setUserId(null));
     }, []);

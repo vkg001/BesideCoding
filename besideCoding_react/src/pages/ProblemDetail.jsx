@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from '../Constants';
 
 // --- SVG Icons ---
 const DocumentTextIcon = ({ className = "w-4 h-4" }) => (
@@ -84,7 +85,7 @@ const ProblemDetail = () => {
   const useSessionUserId = () => {
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-      axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
+      axios.get(API_BASE_URL + "/api/session-user", { withCredentials: true })
         .then(res => setUserId(res.data.userId))
         .catch(err => {
           console.error("Not logged in or error fetching session user:", err);
@@ -214,7 +215,7 @@ const ProblemDetail = () => {
       return;
     }
     try {
-      const res = await axios.post("${API_BASE_URL}api/submit", // Using axios for consistency
+      const res = await axios.post(API_BASE_URL + "/api/submit", // Using axios for consistency
         {
           problemId: problem.id,
           userId: userId,

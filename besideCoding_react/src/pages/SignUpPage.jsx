@@ -45,7 +45,7 @@ const SignUpPage = () => {
       return;
     }
     try {
-      await axios.post("${API_BASE_URL}api/signup", {
+      await axios.post(API_BASE_URL + "/api/signup", {
         name: formData.username,
         email: formData.email,
         password: formData.password,

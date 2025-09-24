@@ -3,6 +3,7 @@ import axios from 'axios';
 import Countdown from 'react-countdown';
 import { useNavigate } from 'react-router-dom';
 import { Award, Clock, Timer, Users, Zap } from 'lucide-react';
+import { API_BASE_URL } from '../Constants';
 
 // ... CountdownRenderer and other helper components/hooks remain the same ...
 const CountdownRenderer = ({ days, hours, minutes, seconds, completed, label, isParentLive }) => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaPen } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Make sure useNavigate is imported
+import { API_BASE_URL } from '../Constants';
 
 // TIME AGO HELPER FUNCTION
 const formatTimeAgo = (dateString) => {
@@ -51,7 +52,7 @@ const useSessionUserId = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
+    axios.get(API_BASE_URL + "/api/session-user", { withCredentials: true })
       .then((res) => setUserId(res.data.userId))
       .catch(() => setUserId(null))
       .finally(() => setLoading(false));
@@ -140,7 +141,7 @@ const ProfilePage = () => {
     if (profilePic) {
       formDataToSend.append("image", profilePic);
     }
-    axios.post("${API_BASE_URL}api/profile/edit", formDataToSend, { withCredentials: true })
+    axios.post(API_BASE_URL + "/api/profile/edit", formDataToSend, { withCredentials: true })
       .then(() => {
         setShowEditModal(false);
         window.location.reload();

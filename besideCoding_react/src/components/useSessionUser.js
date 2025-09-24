@@ -1,6 +1,7 @@
 // src/components/useSessionUser.js
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../Constants';
 
 const useSessionUser = () => {
   const [user, setUser] = useState(null);

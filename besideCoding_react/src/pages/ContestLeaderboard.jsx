@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 
+
 const ContestLeaderboard = () => {
   const { contestId } = useParams();
   const navigate = useNavigate(); // Hook for navigation
