@@ -13,73 +13,62 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class ContestService {
 
-    @Autowired
-    private ContestRepository contestRepository;
-
-    @Autowired
-    private ProblemRepository problemRepository;
-
-    @Autowired
-    private ContestProblemRepository contestProblemRepository;
-
+    private final ContestRepository contestRepository;
+    private final ProblemRepository problemRepository;
+    private final ContestProblemRepository contestProblemRepository;
     private final ContestParticipantService contestParticipantService;
-
-
     private final ContestSolutionFetcher contestSolutionFetcher;
 
     @Transactional
     public void createContest(ContestCreateRequestDTO dto) {
-        // Save contest metadata
         Contest contest = new Contest();
         contest.setTitle(dto.getTitle());
         contest.setDescription(dto.getDescription());
         contest.setStartTime(dto.getStartTime());
         contest.setEndTime(dto.getEndTime());
-        contest.setVisible(false);
+        contest.setVisible(dto.isVisible()); // ✅ FIX: Use the value from the DTO
         contestRepository.save(contest);
 
-        // Handle each problem (existing or new)
-        for (ProblemRefDTO ref : dto.getProblems()) {
-            Problems problem;
+        // ✅ FIX: Add null check to prevent NullPointerException
+        if (dto.getProblems() != null) {
+            for (ProblemRefDTO ref : dto.getProblems()) {
+                Problems problem;
 
-            if (ref.getId() != null) {
-                // Existing problem
-                problem = problemRepository.findById(ref.getId())
-                        .orElseThrow(() -> new RuntimeException("Problem not found: " + ref.getId()));
-            } else {
-                // New problem
-                Problems newProblem = new Problems();
-                newProblem.setTitle(ref.getTitle());
-                newProblem.setDescription(ref.getDescription());
-                newProblem.setStatus(Problems.Status.Need_Approval);
-                newProblem.setLikes(0);
-                newProblem.setDislikes(0);
-                newProblem.setViews(0);
-                newProblem.setReports(0);
-                newProblem = problemRepository.save(newProblem);  // ✅ save and get new ID
-                problem = newProblem;
+                if (ref.getId() != null) {
+                    problem = problemRepository.findById(ref.getId())
+                            .orElseThrow(() -> new RuntimeException("Problem not found: " + ref.getId()));
+                } else {
+                    Problems newProblem = new Problems();
+                    newProblem.setTitle(ref.getTitle());
+                    newProblem.setDescription(ref.getDescription());
+                    // Set sensible defaults for new problems
+                    newProblem.setStatus(Problems.Status.Need_Approval);
+                    newProblem.setLikes(0);
+                    newProblem.setDislikes(0);
+                    newProblem.setViews(0);
+                    newProblem.setReports(0);
+                    problem = problemRepository.save(newProblem);
+                }
+
+                ContestProblem cp = new ContestProblem();
+                cp.setContest(contest);
+                cp.setProblem(problem);
+                contestProblemRepository.save(cp);
             }
-
-            // Create association
-            ContestProblem cp = new ContestProblem();
-            cp.setContest(contest);
-            cp.setProblem(problem);
-            contestProblemRepository.save(cp);
         }
     }
 
     private ContestResponseDTO toDto(Contest contest) {
-        // Get the participant count for this specific contest
         int count = contestParticipantService.countUsersByContest(contest);
 
         ContestResponseDTO dto = new ContestResponseDTO();
@@ -90,7 +79,6 @@ public class ContestService {
         dto.setEndTime(contest.getEndTime());
         dto.setVisible(contest.isVisible());
         dto.setCreatedAt(contest.getCreatedAt());
-        // Set the calculated count
         dto.setParticipantCount(count);
         return dto;
     }
@@ -136,17 +124,20 @@ public class ContestService {
         return contest.getContestProblems().stream().map(cp -> {
             Problems p = cp.getProblem();
             List<String> options = null;
+            String problemType = p.getProblemType() != null ? p.getProblemType().name() : null;
 
-            try {
-                JsonNode additionalInfo = mapper.readTree(p.getAdditionalInfo());
-                if (additionalInfo.has("options")) {
-                    options = mapper.convertValue(additionalInfo.get("options"), List.class);
+
+            if (p.getAdditionalInfo() != null && !p.getAdditionalInfo().isBlank()) {
+                try {
+                    JsonNode additionalInfo = mapper.readTree(p.getAdditionalInfo());
+                    if (additionalInfo.has("options")) {
+                        options = mapper.convertValue(additionalInfo.get("options"), List.class);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("Failed to parse options from additionalInfo", e);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to parse options from additionalInfo", e);
             }
-
-            return new ContestProblemDTO(p.getId(), p.getTitle(), p.getDescription(), options,p.getProblemType().name());
+            return new ContestProblemDTO(p.getId(), p.getTitle(), p.getDescription(), options, problemType);
         }).toList();
     }
 
@@ -162,24 +153,23 @@ public class ContestService {
         Problems p = contestProblem.getProblem();
 
         List<String> options = null;
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode additionalInfo = mapper.readTree(p.getAdditionalInfo());
-            if (additionalInfo.has("options")) {
-                options = mapper.convertValue(additionalInfo.get("options"), List.class);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to parse additionalInfo for problem ID " + p.getId(), e);
-        }
+        String problemType = p.getProblemType() != null ? p.getProblemType().name() : null;
 
-        return new ContestProblemDTO(p.getId(), p.getTitle(), p.getDescription(), options,p.getProblemType().name());
+        if (p.getAdditionalInfo() != null && !p.getAdditionalInfo().isBlank()) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode additionalInfo = mapper.readTree(p.getAdditionalInfo());
+                if (additionalInfo.has("options")) {
+                    options = mapper.convertValue(additionalInfo.get("options"), List.class);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to parse additionalInfo for problem ID " + p.getId(), e);
+            }
+        }
+        return new ContestProblemDTO(p.getId(), p.getTitle(), p.getDescription(), options, problemType);
     }
 
     public List<ContestSolutionDTO> getUserSolutions(Integer contestId, Integer userId) {
         return contestSolutionFetcher.getUserSolutionsForContest(contestId, userId);
     }
-
-
-
-
 }
