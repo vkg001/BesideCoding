@@ -11,12 +11,12 @@ import java.util.List;
 @Repository
 public interface ProblemRepository extends JpaRepository<Problems, Integer> {
 
-    @Query("SELECT p FROM problems p WHERE " +
-            "p.status = com.example.besideCoding.problem.model.Problem$Status.Live AND " +
+    @Query("SELECT p FROM Problems p WHERE " +
+            "p.status = 'Live' AND " +
             "(:category IS NULL OR p.category = :category) AND " +
             "(:subCategories IS NULL OR p.subCategory IN :subCategories) AND " +
             "(:companies IS NULL OR p.company IN :companies) AND " +
-            "(:searchTerm IS NULL OR LOWER(CAST(p.title AS string)) LIKE LOWER(CONCAT('%', :searchTerm, '%'))) " +
+            "(:searchTerm IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :searchTerm, '%'))) " +
             "ORDER BY p.id ASC")
     List<Problems> findProblemsByMultipleFilters(
             @Param("category") String category,
@@ -30,6 +30,6 @@ public interface ProblemRepository extends JpaRepository<Problems, Integer> {
     @Query(value = "SELECT DISTINCT company FROM problems WHERE company IS NOT NULL AND company <> '' ORDER BY company ASC", nativeQuery = true)
     List<String> findAllDistinctCompanies();
 
-    @Query("SELECT p.difficulty, COUNT(p) FROM problems p WHERE p.status = com.example.besideCoding.problem.model.Problem$Status.Live GROUP BY p.difficulty")
+    @Query("SELECT p.difficulty, COUNT(p) FROM Problems p WHERE p.status = 'Live' GROUP BY p.difficulty")
     List<Object[]> countProblemsByDifficulty();
 }
