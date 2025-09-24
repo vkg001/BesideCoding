@@ -5,7 +5,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("api/admin/users")
+    fetch(API_BASE_URL + "api/admin/users")
       .then((res) => res.json())
       .then(setUsers);
   }, []);

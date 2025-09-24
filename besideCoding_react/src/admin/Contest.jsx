@@ -5,6 +5,7 @@ import { API_BASE_URL } from '../Constants';
 
 function Contest() {
   const [contests, setContests] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,13 +13,12 @@ function Contest() {
   }, []);
 
   const fetchContests = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(API_BASE_URL + 'api/admin/contest/all', {
         withCredentials: true,
       });
-      console.log('Fetched contests:', res.data);
 
-      // Ensure it's an array
       if (Array.isArray(res.data)) {
         setContests(res.data);
       } else {
@@ -28,6 +28,8 @@ function Contest() {
     } catch (err) {
       console.error('Failed to fetch contests', err);
       setContests([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,7 +66,9 @@ function Contest() {
         </button>
       </div>
 
-      {!Array.isArray(contests) || contests.length === 0 ? (
+      {loading ? (
+        <p>Loading contests...</p>
+      ) : !Array.isArray(contests) || contests.length === 0 ? (
         <p>No contests available.</p>
       ) : (
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
