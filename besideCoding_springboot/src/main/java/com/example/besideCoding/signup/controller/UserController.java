@@ -112,6 +112,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getSessionUser(HttpSession session) {
         Object userId = session.getAttribute("userId");
         if (userId == null) {
+            session.setAttribute("init", "done");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(Map.of("userId", userId));
