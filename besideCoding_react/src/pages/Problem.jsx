@@ -47,8 +47,8 @@ const Problem = () => {
       setIsLoading(true);
       try {
         const [subCategoriesRes, companiesRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/problems/sub-categories`),
-          fetch(`${API_BASE_URL}/problems/companies`),
+          fetch(`${API_BASE_URL}problems/sub-categories`),
+          fetch(`${API_BASE_URL}problems/companies`),
         ]);
         if (!subCategoriesRes.ok || !companiesRes.ok) {
           throw new Error('Failed to fetch filter options');
@@ -71,7 +71,7 @@ const Problem = () => {
   // Fetch problems based on current filters
   const fetchProblems = useCallback(async () => {
     setIsLoading(true);
-    let url = `${API_BASE_URL}/problems`;
+    let url = `${API_BASE_URL}problems`;
     const params = new URLSearchParams();
 
     if (selectedMainCategory && selectedMainCategory !== "All Problems") {
