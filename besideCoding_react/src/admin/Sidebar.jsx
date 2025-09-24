@@ -12,6 +12,7 @@ const Sidebar = () => {
         <Link to="/admin/problems">Problems</Link>
         <Link to="/admin/reports">Reports</Link>
         <Link to="/admin/contest">Contest</Link>
+        <Link to="/profile">User Profile</Link>
       </nav>
     </div>
   );
