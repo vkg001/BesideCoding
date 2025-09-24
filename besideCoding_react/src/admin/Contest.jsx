@@ -12,7 +12,7 @@ function Contest() {
 
   const fetchContests = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/api/admin/contest/all', {
+      const res = await axios.get('${API_BASE_URL}api/admin/contest/all', {
         withCredentials: true,
       });
       console.log('Fetched contests:', res.data);
@@ -34,7 +34,7 @@ function Contest() {
     if (!window.confirm('Are you sure you want to delete this contest?')) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/admin/contest/delete/${id}`, {
+      await axios.delete(`${API_BASE_URL}api/admin/contest/delete/${id}`, {
         withCredentials: true,
       });
       setContests((prev) => prev.filter((contest) => contest.id !== id));

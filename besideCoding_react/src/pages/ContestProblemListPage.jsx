@@ -13,12 +13,12 @@ const ContestProblemListPage = () => {
     useEffect(() => {
         const fetchContestAndProblems = async () => {
             try {
-                const contestRes = await axios.get(`http://localhost:8080/api/contests/${contestId}`, {
+                const contestRes = await axios.get(`${API_BASE_URL}api/contests/${contestId}`, {
                     withCredentials: true,
                 });
                 setContest(contestRes.data);
 
-                const problemsRes = await axios.get(`http://localhost:8080/api/contests/${contestId}/problems`, {
+                const problemsRes = await axios.get(`${API_BASE_URL}api/contests/${contestId}/problems`, {
                     withCredentials: true,
                 });
                 setProblems(problemsRes.data);

@@ -40,7 +40,7 @@ const NewProblemForm = ({ onSubmit, mode = "standalone" }) => {
     }
 
     try {
-      const res = await fetch('http://localhost:8080/api/problems/contribute', {
+      const res = await fetch('${API_BASE_URL}api/problems/contribute', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

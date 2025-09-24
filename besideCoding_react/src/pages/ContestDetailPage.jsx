@@ -10,7 +10,7 @@ import { Calendar, Clock } from 'lucide-react';
 const useSessionUserId = () => {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    axios.get("http://localhost:8080/api/session-user", { withCredentials: true })
+    axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
       .then((res) => setUserId(res.data.userId))
       .catch(() => setUserId(null));
   }, []);
@@ -71,11 +71,11 @@ const ContestDetailPage = () => {
         const fetchContestAndStatus = async () => {
             setIsLoading(true);
             try {
-                const contestRes = await axios.get(`http://localhost:8080/api/contests/${contestId}`, { withCredentials: true });
+                const contestRes = await axios.get(`${API_BASE_URL}api/contests/${contestId}`, { withCredentials: true });
                 setContest(contestRes.data);
 
                 if (userId) {
-                    const statusRes = await axios.get(`http://localhost:8080/api/contest-participant/status`, {
+                    const statusRes = await axios.get(`${API_BASE_URL}api/contest-participant/status`, {
                         params: { userId, contestId },
                         withCredentials: true
                     });
@@ -108,7 +108,7 @@ const ContestDetailPage = () => {
             params.append('userId', userId);
             params.append('contestId', contestId);
 
-            await axios.post(`http://localhost:8080/api/contest-participant/join`, params, {
+            await axios.post(`${API_BASE_URL}api/contest-participant/join`, params, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 withCredentials: true,
             });
@@ -131,7 +131,7 @@ const ContestDetailPage = () => {
     };
     
     const handleViewSolutions = () => {
-        axios.get(`http://localhost:8080/api/contests/${contestId}/problems`, { withCredentials: true })
+        axios.get(`${API_BASE_URL}api/contests/${contestId}/problems`, { withCredentials: true })
             .then(res => 
                 navigate(`/contest/${contestId}/solutions/0`, { 
                     state: { problems: res.data, contestId, contestName: contest.title } 

@@ -14,8 +14,8 @@ const ContestLeaderboard = () => {
       try {
         // --- THIS IS THE CORRECTED API ENDPOINT ---
         // It now matches the one being blocked by Spring Security.
-        const leaderboardUrl = `http://localhost:8080/api/contests/${contestId}/leaderboard`;
-        const contestUrl = `http://localhost:8080/api/contests/${contestId}`;
+        const leaderboardUrl = `${API_BASE_URL}api/contests/${contestId}/leaderboard`;
+        const contestUrl = `${API_BASE_URL}api/contests/${contestId}`;
 
         const [leaderboardRes, contestRes] = await Promise.all([
           axios.get(leaderboardUrl, { withCredentials: true }),

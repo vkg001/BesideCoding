@@ -51,7 +51,7 @@ const useSessionUserId = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/session-user", { withCredentials: true })
+    axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
       .then((res) => setUserId(res.data.userId))
       .catch(() => setUserId(null))
       .finally(() => setLoading(false));
@@ -99,8 +99,8 @@ const ProfilePage = () => {
   useEffect(() => {
     if (userId) {
       Promise.all([
-        axios.get(`http://localhost:8080/api/profile/${userId}`, { withCredentials: true }),
-        axios.get(`http://localhost:8080/api/problems/counts-by-difficulty`, { withCredentials: true })
+        axios.get(`${API_BASE_URL}api/profile/${userId}`, { withCredentials: true }),
+        axios.get(`${API_BASE_URL}api/problems/counts-by-difficulty`, { withCredentials: true })
       ]).then(([profileRes, countsRes]) => {
         const fetchedData = profileRes.data;
         setProfileData(fetchedData);
@@ -140,7 +140,7 @@ const ProfilePage = () => {
     if (profilePic) {
       formDataToSend.append("image", profilePic);
     }
-    axios.post("http://localhost:8080/api/profile/edit", formDataToSend, { withCredentials: true })
+    axios.post("${API_BASE_URL}api/profile/edit", formDataToSend, { withCredentials: true })
       .then(() => {
         setShowEditModal(false);
         window.location.reload();

@@ -26,7 +26,7 @@ const formatCount = (num) => {
 const useSessionUserId = () => {
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-        axios.get("http://localhost:8080/api/session-user", { withCredentials: true })
+        axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
             .then((res) => setUserId(res.data.userId))
             .catch(() => setUserId(null));
     }, []);
@@ -55,7 +55,7 @@ const ContestSolutionPage = () => {
     // Fetch all problem and submission data in one call
     useEffect(() => {
         if (userId && contestId) {
-            axios.get(`http://localhost:8080/api/contests/${contestId}/submissions`, { params: { userId }, withCredentials: true })
+            axios.get(`${API_BASE_URL}api/contests/${contestId}/submissions`, { params: { userId }, withCredentials: true })
             .then((res) => setProblems(res.data))
             .catch((err) => {
                 console.error("Error fetching contest submissions:", err);
@@ -69,7 +69,7 @@ const ContestSolutionPage = () => {
     // Fetch like/dislike data for the current problem when it changes
     useEffect(() => {
         if (problem?.id && userId) {
-            axios.get(`http://localhost:8080/api/problems/${problem.id}/interactions`, { params: { userId }, withCredentials: true })
+            axios.get(`${API_BASE_URL}api/problems/${problem.id}/interactions`, { params: { userId }, withCredentials: true })
             .then((response) => {
                 const { userStatus, likes, dislikes } = response.data;
                 setUserLikeStatus(userStatus);
@@ -86,7 +86,7 @@ const ContestSolutionPage = () => {
 
         const statusToSend = userLikeStatus === clickedInteractionType ? null : clickedInteractionType;
         try {
-            const res = await axios.post(`http://localhost:8080/api/problems/${problem.id}/interact`, {
+            const res = await axios.post(`${API_BASE_URL}api/problems/${problem.id}/interact`, {
                 userId, status: statusToSend,
             }, { withCredentials: true });
 

@@ -15,7 +15,7 @@ const ListIcon = () => (
 const useSessionUserId = () => {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    axios.get("http://localhost:8080/api/session-user", { withCredentials: true })
+    axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
       .then((res) => setUserId(res.data.userId))
       .catch(() => setUserId(null));
   }, []);
@@ -104,7 +104,7 @@ const ContestProblemDetailPage = () => {
       params.append('contestId', contestId);
 
       // Call the backend endpoint to mark the user's participation as 'ended'
-      await axios.post(`http://localhost:8080/api/contest-participant/end`, params, { withCredentials: true });
+      await axios.post(`${API_BASE_URL}api/contest-participant/end`, params, { withCredentials: true });
 
       toast.success("🎉 Contest ended successfully! Redirecting to the leaderboard.");
 
@@ -136,7 +136,7 @@ const ContestProblemDetailPage = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/api/submit-contest", {
+      await axios.post("${API_BASE_URL}api/submit-contest", {
         userId,
         contestId,
         problemId: problem.id,

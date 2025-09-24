@@ -45,7 +45,7 @@ const SignUpPage = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:8080/api/signup", {
+      await axios.post("${API_BASE_URL}api/signup", {
         name: formData.username,
         email: formData.email,
         password: formData.password,
@@ -67,7 +67,7 @@ const SignUpPage = () => {
     onSuccess: async (tokenResponse) => {
       try {
         // Send the access_token to your backend instead of the old ID token
-        const res = await axios.post('http://localhost:8080/api/auth/google', {
+        const res = await axios.post('${API_BASE_URL}api/auth/google', {
           access_token: tokenResponse.access_token,
         }, { withCredentials: true });
 

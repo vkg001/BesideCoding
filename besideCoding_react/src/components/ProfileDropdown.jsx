@@ -14,7 +14,7 @@ const ProfileDropdown = ({ isOpen, onClose, avatarRef }) => {
   const useSessionUserId = () => {
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-      axios.get("http://localhost:8080/api/session-user", { withCredentials: true })
+      axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
         .then((res) => setUserId(res.data.userId))
         .catch(() => setUserId(null));
     }, []);
@@ -43,7 +43,7 @@ const ProfileDropdown = ({ isOpen, onClose, avatarRef }) => {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://localhost:8080/api/profile/${userId}`, { withCredentials: true })
+      axios.get(`${API_BASE_URL}api/profile/${userId}`, { withCredentials: true })
         .then((res) => {
           setProfileData(res.data);
         })

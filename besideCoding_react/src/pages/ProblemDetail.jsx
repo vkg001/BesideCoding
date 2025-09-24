@@ -84,7 +84,7 @@ const ProblemDetail = () => {
   const useSessionUserId = () => {
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-      axios.get("http://localhost:8080/api/session-user", { withCredentials: true })
+      axios.get("${API_BASE_URL}api/session-user", { withCredentials: true })
         .then(res => setUserId(res.data.userId))
         .catch(err => {
           console.error("Not logged in or error fetching session user:", err);
@@ -97,7 +97,7 @@ const ProblemDetail = () => {
 
   useEffect(() => {
     if (problemRouteId) {
-      axios.get(`http://localhost:8080/api/problems/${problemRouteId}`)
+      axios.get(`${API_BASE_URL}api/problems/${problemRouteId}`)
         .then((res) => {
           setProblem(res.data);
 
@@ -113,7 +113,7 @@ const ProblemDetail = () => {
   // Fetch initial like/dislike status and counts
   useEffect(() => {
     if (problemRouteId && userId) { // Ensure userId is available
-      axios.get(`http://localhost:8080/api/problems/${problemRouteId}/interactions`, {
+      axios.get(`${API_BASE_URL}api/problems/${problemRouteId}/interactions`, {
         params: { userId },
         withCredentials: true
       })
@@ -133,7 +133,7 @@ const ProblemDetail = () => {
       });
     } else if (problemRouteId && !userId) {
         // If problemId exists but no userId, fetch public like/dislike counts
-        axios.get(`http://localhost:8080/api/problems/${problemRouteId}/interactions`, {
+        axios.get(`${API_BASE_URL}api/problems/${problemRouteId}/interactions`, {
             withCredentials: true // Might not be needed if endpoint allows non-authed count fetching
         })
         .then(response => {
@@ -172,7 +172,7 @@ const ProblemDetail = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/problems/${problemRouteId}/interact`,
+        `${API_BASE_URL}api/problems/${problemRouteId}/interact`,
         {
           userId: userId,
           status: statusToSendToApi,
@@ -214,7 +214,7 @@ const ProblemDetail = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:8080/api/submit", // Using axios for consistency
+      const res = await axios.post("${API_BASE_URL}api/submit", // Using axios for consistency
         {
           problemId: problem.id,
           userId: userId,
