@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from '../Constants';
 
 const Users = () => {
   const [users, setUsers] = useState([]);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../Constants';
 
 const NewProblemForm = ({ onSubmit, mode = "standalone" }) => {
   const [form, setForm] = useState({
