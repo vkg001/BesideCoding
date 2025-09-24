@@ -1,7 +1,7 @@
 package com.example.besideCoding.contestparticipation.model;
 
 import com.example.besideCoding.contest.model.Contest;
-import com.example.besideCoding.signup.model.User;
+import com.example.besideCoding.signup.model.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +27,7 @@ public class ContestParticipant {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Users user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contest_id", nullable = false)

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.besideCoding.signup.dto.EditProfileRequestDTO;
-import com.example.besideCoding.signup.model.User;
+import com.example.besideCoding.signup.model.Users;
 import com.example.besideCoding.signup.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,20 +40,20 @@ public class UserService {
         return userRepository.countByEmail(email) > 0;
     }
 
-    public User createUser(User user) {
+    public Users createUser(Users user) {
         return userRepository.save(user);
     }
 
-    public User signInUser(String email, String password) {
+    public Users signInUser(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
-    public User findByEmail(String email) {
+    public Users findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
 
     @Transactional
-    public User verifyGoogleTokenAndGetOrCreateUser(String idTokenString) throws Exception {
+    public Users verifyGoogleTokenAndGetOrCreateUser(String idTokenString) throws Exception {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance())
                 .setAudience(Collections.singletonList(googleClientId))
                 .build();
@@ -72,11 +72,11 @@ public class UserService {
         String pictureUrl = (String) payload.get("picture");
 
         // Check if user already exists with this email
-        Optional<User> userOptional = userRepository.findByEmail(email);
+        Optional<Users> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
             // User exists, this is a SIGN-IN
-            User existingUser = userOptional.get();
+            Users existingUser = userOptional.get();
             // Optional: Update their googleId or profile picture if it's missing
             if (existingUser.getGoogleId() == null) {
                 existingUser.setGoogleId(googleUserId);
@@ -87,7 +87,7 @@ public class UserService {
             return userRepository.save(existingUser);
         } else {
             // User does not exist, this is a SIGN-UP
-            User newUser = new User();
+            Users newUser = new Users();
             newUser.setEmail(email);
             newUser.setName(name);
             newUser.setGoogleId(googleUserId); // Store the unique Google ID
@@ -98,23 +98,23 @@ public class UserService {
 
             // Set default values as in your model
             newUser.set_admin(false);
-            newUser.setStatus(User.Status.active);
+            newUser.setStatus(Users.Status.active);
 
             return userRepository.save(newUser);
         }
     }
 
     @Transactional // It's good practice to make this transactional
-    public User findOrCreateGoogleUser(String email, String name, String pictureUrl) {
+    public Users findOrCreateGoogleUser(String email, String name, String pictureUrl) {
         // Check if the user already exists by email
-        Optional<User> userOptional = userRepository.findByEmail(email);
+        Optional<Users> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
             // User exists, return them (this is a sign-in)
             return userOptional.get();
         } else {
             // User does not exist, create a new one (this is a sign-up)
-            User newUser = new User();
+            Users newUser = new Users();
             newUser.setEmail(email);
             newUser.setName(name);
             newUser.setProfilePic(pictureUrl); // Set the profile picture from Google
@@ -125,7 +125,7 @@ public class UserService {
 
             // Set default values as needed by your User model
             newUser.set_admin(false);
-            newUser.setStatus(User.Status.active); // Assuming you have an enum or similar for status
+            newUser.setStatus(Users.Status.active); // Assuming you have an enum or similar for status
 
             return userRepository.save(newUser);
         }
@@ -133,7 +133,7 @@ public class UserService {
 
     @Transactional
     public void updateProfile(Integer userId, EditProfileRequestDTO dto) {
-        User user = userRepository.findById(userId)
+        Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (dto.getName() != null  && !dto.getName().trim().isEmpty()) {
@@ -179,7 +179,7 @@ public class UserService {
 
     @Transactional
     public void updateProfilePicture(Integer userId, String imageUrl) {
-        User user = userRepository.findById(userId)
+        Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId + " when updating profile picture."));
 
         if (imageUrl == null || imageUrl.trim().isEmpty()) {

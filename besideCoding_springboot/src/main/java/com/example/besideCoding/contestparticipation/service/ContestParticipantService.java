@@ -3,12 +3,10 @@ package com.example.besideCoding.contestparticipation.service;
 import com.example.besideCoding.contest.model.Contest;
 import com.example.besideCoding.contestparticipation.model.ContestParticipant;
 import com.example.besideCoding.contestparticipation.repository.ContestParticipantRepository;
-import com.example.besideCoding.signup.model.User;
-import jakarta.transaction.Transactional;
+import com.example.besideCoding.signup.model.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -17,13 +15,13 @@ public class ContestParticipantService {
 
     private final ContestParticipantRepository repository;
 
-    public boolean hasUserEndedContest(User user, Contest contest) {
+    public boolean hasUserEndedContest(Users user, Contest contest) {
         return repository.findByUserAndContest(user, contest)
                 .map(ContestParticipant::isEnded)
                 .orElse(false);
     }
 
-    public void markUserJoined(User user, Contest contest) {
+    public void markUserJoined(Users user, Contest contest) {
         Optional<ContestParticipant> existing = repository.findByUserAndContest(user, contest);
         if (existing.isEmpty()) {
             repository.save(ContestParticipant.builder()
@@ -34,7 +32,7 @@ public class ContestParticipantService {
         }
     }
 
-    public boolean markUserEnded(User user, Contest contest) {
+    public boolean markUserEnded(Users user, Contest contest) {
         Optional<ContestParticipant> participantOpt = repository.findByUserAndContest(user, contest);
 
         if (participantOpt.isPresent()) {
@@ -47,7 +45,7 @@ public class ContestParticipantService {
         return false; // No record was found.
     }
 
-    public int countContestsByUser(User user) {
+    public int countContestsByUser(Users user) {
         return repository.countByUser(user);
     }
 

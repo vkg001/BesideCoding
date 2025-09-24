@@ -3,7 +3,7 @@ package com.example.besideCoding.contestparticipation.controller;
 import com.example.besideCoding.contest.model.Contest;
 import com.example.besideCoding.contest.repository.ContestRepository;
 import com.example.besideCoding.contestparticipation.service.ContestParticipantService;
-import com.example.besideCoding.signup.model.User;
+import com.example.besideCoding.signup.model.Users;
 import com.example.besideCoding.signup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ContestParticipantController {
 
     @PostMapping("/join")
     public ResponseEntity<?> joinContest(@RequestParam Integer userId, @RequestParam Integer contestId) {
-        Optional<User> user = userRepo.findById(userId);
+        Optional<Users> user = userRepo.findById(userId);
         Optional<Contest> contest = contestRepo.findById(contestId);
 
         if (user.isEmpty() || contest.isEmpty()) {
@@ -42,7 +42,7 @@ public class ContestParticipantController {
 
     @PostMapping("/end")
     public ResponseEntity<?> endContest(@RequestParam Integer userId, @RequestParam Integer contestId) {
-        Optional<User> user = userRepo.findById(userId);
+        Optional<Users> user = userRepo.findById(userId);
         Optional<Contest> contest = contestRepo.findById(contestId);
 
         if (user.isEmpty() || contest.isEmpty()) {
@@ -61,7 +61,7 @@ public class ContestParticipantController {
 
     @GetMapping("/status")
     public ResponseEntity<?> getParticipationStatus(@RequestParam Long userId, @RequestParam Long contestId) {
-        Optional<User> userOpt = userRepo.findById(userId.intValue()); // Adjust if your repo takes Long
+        Optional<Users> userOpt = userRepo.findById(userId.intValue()); // Adjust if your repo takes Long
         Optional<Contest> contestOpt = contestRepo.findById(contestId.intValue()); // Adjust if your repo takes Long
 
         if (userOpt.isEmpty() || contestOpt.isEmpty()) {

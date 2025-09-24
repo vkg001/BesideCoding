@@ -1,6 +1,6 @@
 package com.example.besideCoding.signup.repository;
 
-import com.example.besideCoding.signup.model.User;
+import com.example.besideCoding.signup.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,24 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+public interface UserRepository extends JpaRepository<Users, Integer> {
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query("SELECT COUNT(u) FROM users u WHERE u.email = :email")
     int countByEmail(String email);
 
-    @Query(value = "SELECT * FROM users WHERE email = :email AND password = :password", nativeQuery = true)
-    User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+    Users findByEmailAndPassword(String email, String password);
 
-    Optional<User> findById(Integer id);
-    //@Query(value = "SELECT * FROM user WHERE id = :id", nativeQuery = true)
-    //User findUserById(@Param("id") Long id);
+    @Override
+    Optional<Users> findById(Integer id);
 
-    Optional<User> findByEmail(String email);
+    Optional<Users> findByEmail(String email);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE users SET profile_pic = :imageUrl WHERE id = :userId", nativeQuery = true)
     void updateProfilePic(@Param("userId") Integer userId, @Param("imageUrl") String imageUrl);
-
-
 }
+

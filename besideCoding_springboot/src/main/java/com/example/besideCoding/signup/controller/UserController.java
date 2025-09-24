@@ -1,7 +1,7 @@
 package com.example.besideCoding.signup.controller;
 
 import com.example.besideCoding.signup.dto.EditProfileRequestDTO;
-import com.example.besideCoding.signup.model.User;
+import com.example.besideCoding.signup.model.Users;
 import com.example.besideCoding.signup.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
@@ -28,13 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, Object>> signup(@RequestBody User user, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> signup(@RequestBody Users user, HttpSession session) {
         if (userService.emailExists(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Email already exists"));
         }
 
-        User savedUser = userService.createUser(user);
+        Users savedUser = userService.createUser(user);
         session.setAttribute("userId", savedUser.getId());
 
         return ResponseEntity.ok(Map.of(
@@ -49,7 +49,7 @@ public class UserController {
         String email = request.get("email");
         String password = request.get("password");
 
-        User user = userService.signInUser(email, password);
+        Users user = userService.signInUser(email, password);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid credentials"));
         }
@@ -89,7 +89,7 @@ public class UserController {
             String name = (String) userInfo.get("name");
             String pictureUrl = (String) userInfo.get("picture");
 
-            User user = userService.findOrCreateGoogleUser(email, name, pictureUrl);
+            Users user = userService.findOrCreateGoogleUser(email, name, pictureUrl);
             session.setAttribute("userId", user.getId());
 
             Map<String, Object> response = new HashMap<>();
