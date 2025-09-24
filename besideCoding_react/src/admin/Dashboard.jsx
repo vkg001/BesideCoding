@@ -24,7 +24,7 @@ function Dashboard() {
       try {
         setLoading(true);
         // This is a hypothetical endpoint. You need to create it on your backend.
-        const response = await axios.get(`${API_BASE_URL}/api/admin/dashboard/insights`, {
+        const response = await axios.get(`${API_BASE_URL}api/admin/dashboard/insights`, {
           withCredentials: true,
         });
         setStats(response.data);
