@@ -15,8 +15,7 @@ public interface ProblemRepository extends JpaRepository<Problems, Integer> {
             "p.status = 'Live' AND " +
             "(:category IS NULL OR p.category = :category) AND " +
             "(:subCategories IS NULL OR p.subCategory IN :subCategories) AND " +
-            "(:companies IS NULL OR p.company IN :companies) AND " +
-            "(:searchTerm IS NULL OR LOWER(p.title) LIKE LOWER(CONCAT('%', :searchTerm, '%'))) " +
+            "(:companies IS NULL OR p.company IN :companies) " +
             "ORDER BY p.id ASC")
     List<Problems> findProblemsByMultipleFilters(
             @Param("category") String category,
