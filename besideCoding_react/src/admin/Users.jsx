@@ -4,7 +4,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("/api/admin/users")
+    fetch("api/admin/users")
       .then((res) => res.json())
       .then(setUsers);
   }, []);

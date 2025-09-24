@@ -14,7 +14,7 @@ const ProfileDropdown = ({ isOpen, onClose, avatarRef }) => {
   const useSessionUserId = () => {
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-      axios.get(API_BASE_URL + "/api/session-user", { withCredentials: true })
+      axios.get(API_BASE_URL + "api/session-user", { withCredentials: true })
         .then((res) => setUserId(res.data.userId))
         .catch(() => setUserId(null));
     }, []);

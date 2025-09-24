@@ -14,7 +14,7 @@ const Discuss = () => {
       if (activeType) payload.type = activeType;
       if (sort) payload.sort = sort;
 
-      const response = await axios.post(API_BASE_URL + '/api/discussions/filter', payload);
+      const response = await axios.post(API_BASE_URL + 'api/discussions/filter', payload);
       console.log('Fetched Discussions:', response.data);
       setDiscussions(response.data);
     } catch (error) {

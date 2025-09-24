@@ -25,7 +25,7 @@ const useAuthStore = create((set, get) => ({
   checkSession: async () => {
     try {
       // The `withCredentials: true` is crucial for sending the session cookie
-      const res = await axios.get('/api/session-user', { withCredentials: true });
+      const res = await axios.get('api/session-user', { withCredentials: true });
       if (res.data && res.data.userId) {
         set({ user: res.data, loading: false });
       } else {

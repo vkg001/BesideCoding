@@ -16,7 +16,7 @@ const ListIcon = () => (
 const useSessionUserId = () => {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
-    axios.get(API_BASE_URL + "/api/session-user", { withCredentials: true })
+    axios.get(API_BASE_URL + "api/session-user", { withCredentials: true })
       .then((res) => setUserId(res.data.userId))
       .catch(() => setUserId(null));
   }, []);
@@ -137,7 +137,7 @@ const ContestProblemDetailPage = () => {
     }
 
     try {
-      await axios.post(API_BASE_URL + "/api/submit-contest", {
+      await axios.post(API_BASE_URL + "api/submit-contest", {
         userId,
         contestId,
         problemId: problem.id,

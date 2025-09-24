@@ -18,7 +18,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOriginPatterns("https://beside-coding.vercel.app")
+                        .allowedOriginPatterns("http://localhost:5173","https://beside-coding.vercel.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowCredentials(true);

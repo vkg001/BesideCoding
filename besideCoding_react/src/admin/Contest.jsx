@@ -12,7 +12,7 @@ function Contest() {
 
   const fetchContests = async () => {
     try {
-      const res = await axios.get(API_BASE_URL + '/api/admin/contest/all', {
+      const res = await axios.get(API_BASE_URL + 'api/admin/contest/all', {
         withCredentials: true,
       });
       console.log('Fetched contests:', res.data);

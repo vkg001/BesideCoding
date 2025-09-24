@@ -9,7 +9,7 @@ const useSessionUser = () => {
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + '/api/session-user', { withCredentials: true })
+      .get(API_BASE_URL + 'api/session-user', { withCredentials: true })
       .then((res) => {
         setUser(res.data);
         setLoading(false);
