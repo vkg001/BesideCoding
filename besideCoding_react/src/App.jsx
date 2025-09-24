@@ -40,7 +40,7 @@ function App() {
     <>
       <Routes>
       {/* 🌐 Public/User Routes */}\
-      <Route element={<UserLayout />}>
+      <Route element={<UserLayout />}> 
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signin" element={<SignInPage />} />
