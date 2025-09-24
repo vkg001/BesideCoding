@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
  // React origin
 public class UserController {
