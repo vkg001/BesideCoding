@@ -17,28 +17,13 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Bean
-//    @Order(1)
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/**").permitAll()
-//                        .anyRequest().authenticated()
-//                );
-//
-//        return http.build();
-//    }
-
     @Bean
-    @Order(1) // Keep this to ensure it's the highest priority
+    @Order(1)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // WARNING: TEMPORARY DEBUGGING CONFIGURATION
-        // This disables all security and allows every single request.
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Allow ALL requests to ALL endpoints
+                        .anyRequest().permitAll()
                 );
 
         return http.build();
@@ -47,13 +32,17 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://beside-coding.vercel.app"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://beside-coding.vercel.app",
+                "http://localhost:5173",
+                "http://localhost:3000"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply this configuration to all paths
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

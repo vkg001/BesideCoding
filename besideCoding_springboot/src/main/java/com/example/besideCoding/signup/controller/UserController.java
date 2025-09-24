@@ -44,7 +44,7 @@ public class UserController {
         ));
     }
 
-    @PostMapping("/admin/users")
+    @GetMapping("/admin/users")
     public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
