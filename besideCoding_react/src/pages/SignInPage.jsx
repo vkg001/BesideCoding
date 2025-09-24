@@ -67,6 +67,9 @@ const SignInPage = () => {
   const handleSubmit = async (e) => {
     // ... (Your existing form submission logic is fine)
     console.log('Form submitted');
+    console.log(API_BASE_URL + 'api/signin');
+    console.log(emailOrUsername, password);
+
     e.preventDefault();
     try {
       console.log(API_BASE_URL + 'api/signin');
