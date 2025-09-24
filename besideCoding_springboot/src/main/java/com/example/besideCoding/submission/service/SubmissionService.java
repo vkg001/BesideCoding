@@ -1,6 +1,6 @@
 package com.example.besideCoding.submission.service;
 
-import com.example.besideCoding.problem.model.Problem; // Ensure this import is present
+import com.example.besideCoding.problem.model.Problems; // Ensure this import is present
 import com.example.besideCoding.problem.repository.ProblemRepository;
 import com.example.besideCoding.submission.dto.SubmissionRequestDTO;
 import com.example.besideCoding.submission.model.ProblemSubmitted;
@@ -27,14 +27,14 @@ public class SubmissionService {
 
     public String submitAnswer(SubmissionRequestDTO request) throws Exception {
         // Fetch the whole Problem entity
-        Optional<Problem> problemOptional = problemRepository.findById(request.getProblemId());
+        Optional<Problems> problemOptional = problemRepository.findById(request.getProblemId());
 
         if (!problemOptional.isPresent()) {
             // Or throw a custom exception like ProblemNotFoundException
             throw new RuntimeException("Problem not found with ID: " + request.getProblemId());
         }
 
-        Problem problem = problemOptional.get();
+        Problems problem = problemOptional.get();
         String infoJson = problem.getAdditionalInfo(); // Get the additional_info field
 
         if (!StringUtils.hasText(infoJson)) {

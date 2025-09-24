@@ -1,7 +1,7 @@
 package com.example.besideCoding.problem.service;
 
 import com.example.besideCoding.problem.dto.ProblemContributionRequestDTO;
-import com.example.besideCoding.problem.model.Problem;
+import com.example.besideCoding.problem.model.Problems;
 import com.example.besideCoding.problem.repository.ProblemRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ProblemService {
         this.problemRepository = problemRepository;
     }
 
-    public List<Problem> getProblems(String category, List<String> subCategories, List<String> companies, String searchTerm) {
+    public List<Problems> getProblems(String category, List<String> subCategories, List<String> companies, String searchTerm) {
         String effectiveCategory = normalizeSingleParam(category, "All Problems");
         String effectiveSearchTerm = StringUtils.hasText(searchTerm) ? searchTerm.trim() : null;
 
@@ -48,7 +48,7 @@ public class ProblemService {
         return null;
     }
 
-    public Problem getProblemById(int id) {
+    public Problems getProblemById(int id) {
         return problemRepository.findById(id)
                 .orElse(null); // Consider throwing a custom NotFoundException
     }
@@ -83,16 +83,16 @@ public class ProblemService {
 
     public void contributeProblem(ProblemContributionRequestDTO dto) {
         try {
-            Problem problem = new Problem();
+            Problems problem = new Problems();
             problem.setTitle(dto.getTitle());
             problem.setDescription(dto.getDescription());
-            problem.setProblemType(Problem.ProblemType.valueOf(dto.getProblemType()));
+            problem.setProblemType(Problems.ProblemType.valueOf(dto.getProblemType()));
             problem.setSolution(dto.getSolution());
             problem.setCategory(dto.getCategory());
             problem.setDifficulty(dto.getDifficulty());
             problem.setSubCategory(dto.getSubCategory());
             problem.setCompany(dto.getCompany());
-            problem.setStatus(Problem.Status.Need_Approval); // always need approval
+            problem.setStatus(Problems.Status.Need_Approval); // always need approval
             problem.setLikes(0);
             problem.setDislikes(0);
             problem.setViews(0);

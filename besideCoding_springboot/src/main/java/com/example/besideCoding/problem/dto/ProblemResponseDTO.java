@@ -1,7 +1,7 @@
 // ProblemResponseDTO.java
 package com.example.besideCoding.problem.dto;
 
-import com.example.besideCoding.problem.model.Problem;
+import com.example.besideCoding.problem.model.Problems;
 import lombok.Data;
 
 @Data
@@ -20,7 +20,7 @@ public class ProblemResponseDTO {
     private int dislikes;
     private int views;
 
-    public static ProblemResponseDTO fromEntity(Problem problem) {
+    public static ProblemResponseDTO fromEntity(Problems problem) {
         ProblemResponseDTO dto = new ProblemResponseDTO();
         dto.setId(problem.getId());
         dto.setTitle(problem.getTitle());

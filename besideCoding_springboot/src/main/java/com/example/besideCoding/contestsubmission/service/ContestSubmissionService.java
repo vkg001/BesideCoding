@@ -3,7 +3,7 @@ package com.example.besideCoding.contestsubmission.service;
 
 import com.example.besideCoding.contestsubmission.dto.ContestSubmissionRequest;
 import com.example.besideCoding.contestsubmission.repository.ContestSubmissionRepository;
-import com.example.besideCoding.problem.model.Problem;
+import com.example.besideCoding.problem.model.Problems;
 import com.example.besideCoding.problem.repository.ProblemRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +22,7 @@ public class ContestSubmissionService {
 
     @Transactional
     public void submitAnswer(ContestSubmissionRequest req) {
-        Problem problem = problemRepository.findById(req.getProblemId())
+        Problems problem = problemRepository.findById(req.getProblemId())
                 .orElseThrow(() -> new RuntimeException("Problem not found"));
 
         String additionalInfoJson = problem.getAdditionalInfo();

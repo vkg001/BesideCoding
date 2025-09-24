@@ -1,6 +1,6 @@
 package com.example.besideCoding.contest.model;
 
-import com.example.besideCoding.problem.model.Problem;
+import com.example.besideCoding.problem.model.Problems;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,7 +21,7 @@ public class ContestProblem {
     @ManyToOne
     @JoinColumn(name = "problem_id", nullable = false)
 
-    private Problem problem;
+    private Problems problem;
 
     // Optional: Add order or points if needed
     // private Integer problemOrder;

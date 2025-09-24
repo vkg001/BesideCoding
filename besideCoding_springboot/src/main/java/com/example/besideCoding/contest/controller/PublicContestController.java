@@ -4,8 +4,6 @@ import com.example.besideCoding.contest.dto.ContestProblemDTO;
 import com.example.besideCoding.contest.dto.ContestResponseDTO;
 import com.example.besideCoding.contest.dto.ContestSolutionDTO;
 import com.example.besideCoding.contest.service.ContestService;
-import com.example.besideCoding.problem.model.Problem;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

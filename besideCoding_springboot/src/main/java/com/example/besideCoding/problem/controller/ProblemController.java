@@ -2,7 +2,7 @@ package com.example.besideCoding.problem.controller;
 
 import com.example.besideCoding.problem.dto.ProblemContributionRequestDTO;
 import com.example.besideCoding.problem.dto.ProblemResponseDTO;
-import com.example.besideCoding.problem.model.Problem;
+import com.example.besideCoding.problem.model.Problems;
 import com.example.besideCoding.problem.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class ProblemController {
             @RequestParam(value = "company", required = false) List<String> companies,
             @RequestParam(value = "searchTerm", required = false) String searchTerm) {
 
-        List<Problem> problems = problemService.getProblems(category, subCategories, companies, searchTerm);
+        List<Problems> problems = problemService.getProblems(category, subCategories, companies, searchTerm);
         List<ProblemResponseDTO> response = problems.stream()
                 .map(ProblemResponseDTO::fromEntity)
                 .toList();
@@ -51,7 +51,7 @@ public class ProblemController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProblemResponseDTO> getProblemById(@PathVariable int id) {
-        Problem problem = problemService.getProblemById(id);
+        Problems problem = problemService.getProblemById(id);
         if (problem != null) {
             return ResponseEntity.ok(ProblemResponseDTO.fromEntity(problem));
         } else {

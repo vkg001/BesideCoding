@@ -1,10 +1,8 @@
 package com.example.besideCoding.contest.model;
 
-import com.example.besideCoding.problem.model.Problem;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

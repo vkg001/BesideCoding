@@ -7,7 +7,7 @@ import com.example.besideCoding.contest.repository.ContestProblemRepository;
 import com.example.besideCoding.contest.repository.ContestRepository;
 import com.example.besideCoding.contest.repository.ContestSolutionFetcher;
 import com.example.besideCoding.contestparticipation.service.ContestParticipantService;
-import com.example.besideCoding.problem.model.Problem;
+import com.example.besideCoding.problem.model.Problems;
 import com.example.besideCoding.problem.repository.ProblemRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +50,7 @@ public class ContestService {
 
         // Handle each problem (existing or new)
         for (ProblemRefDTO ref : dto.getProblems()) {
-            Problem problem;
+            Problems problem;
 
             if (ref.getId() != null) {
                 // Existing problem
@@ -59,10 +58,10 @@ public class ContestService {
                         .orElseThrow(() -> new RuntimeException("Problem not found: " + ref.getId()));
             } else {
                 // New problem
-                Problem newProblem = new Problem();
+                Problems newProblem = new Problems();
                 newProblem.setTitle(ref.getTitle());
                 newProblem.setDescription(ref.getDescription());
-                newProblem.setStatus(Problem.Status.Need_Approval);
+                newProblem.setStatus(Problems.Status.Need_Approval);
                 newProblem.setLikes(0);
                 newProblem.setDislikes(0);
                 newProblem.setViews(0);
@@ -135,7 +134,7 @@ public class ContestService {
         ObjectMapper mapper = new ObjectMapper();
 
         return contest.getContestProblems().stream().map(cp -> {
-            Problem p = cp.getProblem();
+            Problems p = cp.getProblem();
             List<String> options = null;
 
             try {
@@ -160,7 +159,7 @@ public class ContestService {
         }
 
         ContestProblem contestProblem = contest.getContestProblems().get(index);
-        Problem p = contestProblem.getProblem();
+        Problems p = contestProblem.getProblem();
 
         List<String> options = null;
         try {

@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor // Lombok annotation for no-args constructor
 @AllArgsConstructor // Lombok annotation for all-args constructor
-public class Problem {
+public class Problems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
