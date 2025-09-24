@@ -17,14 +17,28 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+//    @Bean
+//    @Order(1)
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/**").permitAll()
+//                        .anyRequest().authenticated()
+//                );
+//
+//        return http.build();
+//    }
+
     @Bean
-    @Order(1)
+    @Order(1) // Keep this to ensure it's the highest priority
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        // WARNING: TEMPORARY DEBUGGING CONFIGURATION
+        // This disables all security and allows every single request.
+        http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // Allow ALL requests to ALL endpoints
                 );
 
         return http.build();
