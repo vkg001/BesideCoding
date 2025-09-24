@@ -68,10 +68,15 @@ const SignInPage = () => {
     // ... (Your existing form submission logic is fine)
     e.preventDefault();
     try {
+      console.log(API_BASE_URL + 'api/signin');
+      console.log(emailOrUsername, password);
+
       const res = await axios.post(API_BASE_URL + 'api/signin', {
         email: emailOrUsername,
         password: password,
       }, { withCredentials: true });
+
+      console.log(res.data);
 
       const { message, is_admin } = res.data;
       await showLottieSuccess(message);

@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <Routes>
-      {/* 🌐 Public/User Routes */}\
+      {/* 🌐 Public/User Routes */}
       <Route element={<UserLayout />}> 
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUpPage />} />

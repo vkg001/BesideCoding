@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient; // ✅ Use RestClient
+import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final RestClient restClient; // ✅ Injected RestClient
+    private final RestClient restClient;
 
     // Constructor-based injection is a best practice
     public UserController(UserService userService, RestClient restClient) {
