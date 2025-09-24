@@ -20,8 +20,8 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>24</java.version>
-		<maven.compiler.release>24</maven.compiler.release>
+		<java.version>17</java.version>
+		<maven.compiler.release>17</maven.compiler.release>
 	</properties>
 
 	<dependencies>
@@ -96,7 +96,6 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
-
 	</dependencies>
 
 	<build>
@@ -122,7 +121,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>3.2.5</version>
 			</plugin>
 		</plugins>
 	</build>
