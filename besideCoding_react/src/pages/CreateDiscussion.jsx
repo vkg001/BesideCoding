@@ -16,7 +16,7 @@ const CreateDiscussion = () => {
     e.preventDefault();
 
     try {
-      await axios.post('${API_BASE_URL}api/discussions', {
+      await axios.post(API_BASE_URL + '/api/discussions', {
         userId: 1, // Replace this with the actual logged-in user ID
         title,
         description: content,

@@ -42,7 +42,7 @@ const Contribute = () => {
     }
 
     try {
-      const res = await fetch('${API_BASE_URL}api/problems/contribute', {
+      const res = await fetch(API_BASE_URL + '/api/problems/contribute', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

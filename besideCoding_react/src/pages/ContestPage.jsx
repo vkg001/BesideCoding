@@ -47,9 +47,9 @@ const ContestPage = () => {
   const fetchContests = useCallback(async () => {
     try {
       const [activeRes, upcomingRes, pastRes] = await Promise.all([
-        axios.get('${API_BASE_URL}api/contests/active', { withCredentials: true }),
-        axios.get('${API_BASE_URL}api/contests/upcoming', { withCredentials: true }),
-        axios.get('${API_BASE_URL}api/contests/past', { withCredentials: true })
+        axios.get(API_BASE_URL + '/api/contests/active', { withCredentials: true }),
+        axios.get(API_BASE_URL + '/api/contests/upcoming', { withCredentials: true }),
+        axios.get(API_BASE_URL + '/api/contests/past', { withCredentials: true })
       ]);
       
       const active = Array.isArray(activeRes.data) ? activeRes.data : [];

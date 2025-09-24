@@ -68,7 +68,7 @@ const SignInPage = () => {
     // ... (Your existing form submission logic is fine)
     e.preventDefault();
     try {
-      const res = await axios.post('${API_BASE_URL}api/signin', {
+      const res = await axios.post(API_BASE_URL + '/api/signin', {
         email: emailOrUsername,
         password: password,
       }, { withCredentials: true });
@@ -101,7 +101,7 @@ const SignInPage = () => {
       // Your backend was expecting a JWT `credential`. You need to adjust the backend
       // or send this access_token to the backend to get user info.
       try {
-        const res = await axios.post('${API_BASE_URL}api/auth/google', {
+        const res = await axios.post(API_BASE_URL + '/api/auth/google', {
           // Send the access_token to your backend
           access_token: tokenResponse.access_token,
         }, { withCredentials: true });

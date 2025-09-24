@@ -9,7 +9,7 @@ const AddProblemModal = ({ close, onSelect }) => {
 
   const fetchProblems = async () => {
     try {
-      const res = await fetch('${API_BASE_URL}api/problems');
+      const res = await fetch(API_BASE_URL + '/api/problems');
       const data = await res.json();
       setProblems(data);
     } catch (err) {

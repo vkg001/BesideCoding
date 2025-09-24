@@ -38,7 +38,7 @@ const CreateContest = () => {
     }
 
     try {
-      const res = await axios.get('${API_BASE_URL}api/problems', {
+      const res = await axios.get(API_BASE_URL + '/api/problems', {
         params: { searchTerm: problemData.title }
       });
 
@@ -83,7 +83,7 @@ const CreateContest = () => {
     };
 
     try {
-      await axios.post('${API_BASE_URL}api/admin/contest/create', payload, {
+      await axios.post(API_BASE_URL + '/api/admin/contest/create', payload, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
