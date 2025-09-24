@@ -34,7 +34,7 @@ public class SecurityConfig {
     @Order(1) // Keep this to ensure it's the highest priority
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // WARNING: TEMPORARY DEBUGGING CONFIGURATION
-        // This disables all security and allows every single request.
+        // This disables all security and allows every single request. 
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
