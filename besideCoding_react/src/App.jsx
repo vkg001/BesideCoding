@@ -31,6 +31,7 @@ import Problems from "./admin/Problems";
 import Reports from "./admin/Reports";
 import Contest from "./admin/Contest";
 import CreateContest from "./admin/CreateContest";
+import NewProblemForm from "./admin/NewProblemForm";
 import { API_BASE_URL } from './Constants';
 
 
@@ -71,7 +72,7 @@ function App() {
         <Route path="problems" element={<Problems />} />
         <Route path="reports" element={<Reports />} />
         <Route path="contest" element={<Contest />} />
-        
+        <Route path='NewProblemForm' element={<NewProblemForm />} />
         <Route path="create-contest" element={<CreateContest />} />
       </Route>
     </Routes>
