@@ -11,10 +11,10 @@ import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query("SELECT COUNT(u) FROM \"user\" u WHERE u.email = :email")
+    @Query("SELECT COUNT(u) FROM users u WHERE u.email = :email")
     int countByEmail(String email);
 
-    @Query(value = "SELECT * FROM \"user\" WHERE email = :email AND password = :password", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE email = :email AND password = :password", nativeQuery = true)
     User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
     Optional<User> findById(Integer id);
@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE \"user\" SET profile_pic = :imageUrl WHERE id = :userId", nativeQuery = true)
+    @Query(value = "UPDATE users SET profile_pic = :imageUrl WHERE id = :userId", nativeQuery = true)
     void updateProfilePic(@Param("userId") Integer userId, @Param("imageUrl") String imageUrl);
 
 
