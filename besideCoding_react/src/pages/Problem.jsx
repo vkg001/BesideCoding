@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { API_BASE_URL as api_url } from "../Constants";
 
-const API_BASE_URL = api_url + "/api";
+const API_BASE_URL = api_url + "/api/";
 
 const Problem = () => {
   const [problems, setProblems] = useState([]);
