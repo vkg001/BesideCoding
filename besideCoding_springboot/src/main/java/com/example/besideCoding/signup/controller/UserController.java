@@ -12,6 +12,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,6 +42,11 @@ public class UserController {
                 "userId", savedUser.getId(),
                 "is_admin", savedUser.is_admin()
         ));
+    }
+
+    @PostMapping("/admin/users")
+    public List<Users> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @PostMapping("/signin")
