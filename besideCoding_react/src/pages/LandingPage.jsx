@@ -103,7 +103,7 @@ function LandingPage() {
             </div>
             <div className="md:w-1/2 text-center md:text-left p-4 md:p-8 order-1 md:order-2">
               <h1 className="text-4xl md:text-5xl font-extrabold mb-4 md:mb-6 leading-tight">
-                A New Way to Learn
+                A New Way to Learn, Practice & Compete
               </h1>
               <p className="text-md md:text-lg mb-6 md:mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
                 BesideCoding is the best platform to help you enhance your skills, expand your knowledge and prepare for technical interviews.
